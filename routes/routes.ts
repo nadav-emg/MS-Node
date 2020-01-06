@@ -1,5 +1,7 @@
 
 import { Router } from 'express';
+const multer = require('multer');
+const upload = multer();
 import { injectable } from 'inversify';
 import { Controller} from "../controllers/controller";
 
@@ -14,8 +16,10 @@ export class Routes {
     }
 
     init() {
-        this.router.route('/temp')
-            .get(this.controller.get);
+        this.router.post('/identify', upload.single('image'),this.controller.identifyAnimal);
+
+        this.router.route('/user/:username')
+            .get(this.controller.getUserIdent);
 
 
     }
